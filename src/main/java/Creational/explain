@@ -1,0 +1,44 @@
+#Creational Design Pattern
+    -Singleton
+
+        + Description
+            بعمله عشان اعمل object واحد استخدمه علطول من غير ما اعمل اكتر من واحد واعمل لود على ال memory
+
+        + Examples
+           * مثلا لو عندنا loadBalancer ده اكيد بيبقى جزء فيه كل حاجه ولازم كل ال request تروح عليه عشان يظبط
+                                                                                  اى request هنا او هنا
+            * مثلا لو عندنا Constraint معينه او Chin او Configuration فلازم برضو كل ال request تروح عليه عشان
+                                                                                      يعمل handel عليها
+                                                 * خد المثالين دول بقا مقياس نوعا ما لاستخدامات ال singleton
+
+        + Best Solution
+                  * طبعا ده مش اجسن حل للمشكله ده او فى بعض الاشخاص مش بيفضلوها فى حلول ابسط وفى احسن من كدا
+                                                                             يعنى فكر فيه من ضمن الحلول
+           * طيب مش ممكن اعمل global Var استخدمه افضل من كدا طيب تعالا مش انت لوحدك اللى شغال اكيد هتلاقى شخص
+                                  عنده مشكله وهيبوظ الدنيا وكمان ال global var مش حل حلو فى معظم الاوقات
+           * طيب مش ممكن اعمل static واشتغل عليه دا حل حلو برضو بس لو شغال شغل بسيط ومش depend on على حاجات
+                تانيه مثل  interface .... وكمان انت ممكن مش عاوز تشتغل فى static world لان برضو ليه قيود
+
+        + problem
+            * do very expensive task (Memory Wise or Computational Wise)
+                يعنى هوا بياخد وقت فى عمل حاجات كتير وانا فى غنى عن ده وده اسمه (Eager Initialization)
+                وده بيحصل لو عرفت ال object كامل فى ال Global Scope انما لو عرفته داخل داله وال name in global
+                يبقى انت كدا بتعمل (Lazy Initialization) ودى حاجه حلوه حتى الان طيب لو هنعمل thread يبقى لازم نستخدم
+                synchronized عشان لما ال thread تشتغل تبقى على نفس الكلاس لان لو عملتها على ال (Eager) فى بعض الاحسان بيعمل
+                Object جديد والعيب هناان synchronized بيخلى ال performance يقل جدا بس انا عاوز اعمل synchronized فى الاول بس مش علطول
+                فهعمل ال synchronized على ال definition مش الداله كامل وده هيبقى افضل وال performance مش هيقف اوى
+            * synchronized (Singleton.class) {} VS synchronized (this) {}
+                     this   هنا الفرق بينهم لو عندى 2 object كل واحد ممكن يتنفز عادى مش شرط لكن يكونوا مختلفين
+                                      Singleton.class   انما ده لا بقول لازم يكون من نفس النوع وكمان لازم نفس ال object كمان
+            * repeat If why?
+                هنكرر if تانى داخل ال synchronized عشان لو اثنين دخلو فى نفس الوقت مش هيلحق يبين ان تم تعريق الكلاس فبنبحث تانى
+                                                    عشان الثانى مش يعمل new object
+            * Not Main Memory What !!
+                ايوا يعنى دلوقت هوا لو دخل thread هيخزن المعلومات فى مثلا core 0 cache 0 واحد تانى مثلا يدخل يخزن فى core 1 cache 1  الحل هنا
+                انى لازم ااكد عليه انه لازم يحدث ال main Memory بالمعلومات الجديده عشان مش يقرأ null لومش مدث او مش لحق يحدث فهستخدم volatile
+                                                                عشان يحدث
+
+        + finally
+            خلاصه القول ده مجرد حل مش احسن ولا اسوء ممكن يكون الامثل فى بعض الاحيان وممكن لا فانت خليه من ضمن ال solution بتاعتك
+
+
